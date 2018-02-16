@@ -1,0 +1,24 @@
+{
+  "name": "neural-jokes",
+  "homepage": "https://brendansudol.github.io/neural-jokes",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "ace-css": "^1.1.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-scripts": "1.1.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "prettier":
+      "prettier --single-quote --trailing-comma es5 --semi false --write \"src/**/*.js\""
+  },
+  "devDependencies": {
+    "gh-pages": "^1.1.0",
+    "prettier": "^1.10.2"
+  }
+}
