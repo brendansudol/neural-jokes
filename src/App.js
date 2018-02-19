@@ -1,11 +1,23 @@
 import React, { Component } from 'react'
 
 const ml5 = window.ml5
-const modelPath = `${process.env.PUBLIC_URL}/static/models/lstm/hemingway`
+const modelPath = `${process.env.PUBLIC_URL}/static/models/conan`
 const lstm = new ml5.LSTMGenerator(modelPath)
 
+const genText = input =>
+  new Promise((resolve, reject) => {
+    lstm.generate(input, resolve)
+  })
+
+const genTexts = inputs => Promise.all(inputs.map(inp => genText(inp)))
+
 class App extends Component {
-  state = { loading: false, output: '', temp: '0.5', text: 'There was' }
+  state = {
+    loading: false,
+    results: [],
+    temp: '0.5',
+    text: 'There was'
+  }
 
   shouldComponentUpdate(nextProps, nextState) {
     return true
@@ -20,7 +32,7 @@ class App extends Component {
     e.preventDefault()
     const { text } = this.state
     if (!text.length || !lstm.ready) return
-    this.setState({ loading: true, output: '' }, this.initGen)
+    this.setState({ loading: true, results: [] }, this.initGen)
   }
 
   initGen = () => setTimeout(this.runGen, 20)
@@ -30,20 +42,26 @@ class App extends Component {
     const data = {
       seed: text,
       temperature: +temp,
-      length: 200
+      length: 300
     }
 
-    lstm.generate(data, this.processResults)
+    const inputs = [data, data]
+    genTexts(inputs).then(this.processResults)
   }
 
-  processResults = results => {
+  processResults = data => {
     const { text } = this.state
-    const output = `${text} ${results.generated}`
-    this.setState({ loading: false, output })
+    const results = data.map(d => {
+      const raw = d.generated
+      const clean = raw.search('\n\n') > 0 ? raw.split('\n\n')[0] : `${raw}...`
+      return `${text} ${clean}`
+    })
+
+    this.setState({ loading: false, results })
   }
 
   render() {
-    const { loading, output, temp, text } = this.state
+    const { loading, results, temp, text } = this.state
 
     return (
       <div className="p2 sm-p3 container">
@@ -58,7 +76,7 @@ class App extends Component {
             />
           </div>
           <div className="mb3">
-            <label>Temperature: ({parseInt(temp * 10, 10)} / 10)</label>
+            <label>Temperature: ({temp})</label>
             <input
               type="range"
               className="input-range block"
@@ -75,7 +93,12 @@ class App extends Component {
           </button>
         </form>
         {loading && <div>Loading...</div>}
-        {output && <div className="p2 bg-silver rounded">{output}</div>}
+        {results.length > 0 &&
+          results.map((joke, i) => (
+            <div key={i} className="mb2 p2 bg-silver rounded">
+              {joke}
+            </div>
+          ))}
       </div>
     )
   }
