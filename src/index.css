@@ -6,12 +6,25 @@ body {
     sans-serif;
 }
 
+textarea {
+  resize: vertical;
+}
+
 .container {
   margin-left: auto;
   margin-right: auto;
-  max-width: 700px;
+  max-width: 650px;
+}
+
+.mb05 {
+  margin-bottom: 0.25rem;
 }
 
 .bg-silver {
   background-color: #f7f7f7;
+}
+
+.caps {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
 }

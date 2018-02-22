@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/accessible-emoji */
+
 import React, { Component } from 'react'
 
 const ml5 = window.ml5
@@ -15,7 +17,6 @@ class App extends Component {
   state = {
     loading: false,
     results: [],
-    temp: '0.5',
     text: 'There was'
   }
 
@@ -38,14 +39,14 @@ class App extends Component {
   initGen = () => setTimeout(this.runGen, 20)
 
   runGen = () => {
-    const { temp, text } = this.state
+    const { text } = this.state
     const data = {
       seed: text,
-      temperature: +temp,
+      temperature: 0.5,
       length: 300
     }
 
-    const inputs = [data, data]
+    const inputs = [...Array(3)].map(() => ({ ...data }))
     genTexts(inputs).then(this.processResults)
   }
 
@@ -61,44 +62,41 @@ class App extends Component {
   }
 
   render() {
-    const { loading, results, temp, text } = this.state
+    const { loading, results, text } = this.state
 
     return (
       <div className="p2 sm-p3 container">
-        <form className="mb3" onSubmit={this.handleSubmit}>
-          <div className="mb3">
-            <label>Seed</label>
-            <input
-              className="input m0"
+        <div className="mb3">
+          <div className="h3">🤖📝😂</div>
+          <h1 className="mt0 h2">AI Joke Generator</h1>
+        </div>
+
+        <form className="mb2" onSubmit={this.handleSubmit}>
+          <div className="mb2">
+            <label className="block mb05 h6 bold caps">Initial text</label>
+            <textarea
               name="text"
+              className="textarea m0"
+              rows="3"
               value={text}
               onChange={this.handleChange}
             />
           </div>
-          <div className="mb3">
-            <label>Temperature: ({temp})</label>
-            <input
-              type="range"
-              className="input-range block"
-              name="temp"
-              min="0"
-              max="1"
-              step="0.1"
-              value={temp}
-              onChange={this.handleChange}
-            />
-          </div>
           <button type="submit" className="btn btn-primary" disabled={loading}>
-            {loading ? 'Generating' : 'Generate'}
+            {loading ? 'Generating...' : 'Generate'}
           </button>
         </form>
-        {loading && <div>Loading...</div>}
-        {results.length > 0 &&
-          results.map((joke, i) => (
-            <div key={i} className="mb2 p2 bg-silver rounded">
-              {joke}
-            </div>
-          ))}
+
+        {results.length > 0 && (
+          <div className="mt3 border-top border-silver">
+            <h3>Jokes:</h3>
+            {results.map((joke, i) => (
+              <div key={i} className="mb2 p2 bg-silver rounded">
+                {joke}
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     )
   }
