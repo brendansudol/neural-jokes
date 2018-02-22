@@ -65,7 +65,7 @@ class App extends Component {
     const { loading, results, text } = this.state
 
     return (
-      <div className="p2 sm-p3 container">
+      <div className="p2 sm-p3 pb4 container">
         <div className="mb3">
           <div className="h3">🤖📝😂</div>
           <h1 className="mt0 h2">AI Joke Generator</h1>
@@ -83,12 +83,12 @@ class App extends Component {
             />
           </div>
           <button type="submit" className="btn btn-primary" disabled={loading}>
-            {loading ? 'Generating...' : 'Generate'}
+            {loading ? 'Generating jokes...' : 'Generate'}
           </button>
         </form>
 
         {results.length > 0 && (
-          <div className="mt3 border-top border-silver">
+          <div className="my3 border-top border-silver">
             <h3>Jokes:</h3>
             {results.map((joke, i) => (
               <div key={i} className="mb2 p2 bg-silver rounded">
@@ -97,6 +97,21 @@ class App extends Component {
             ))}
           </div>
         )}
+
+        <div className="absolute bottom-0 left-0 right-0 block center p2 h6">
+          <a
+            className="black underline mr2"
+            href="https://twitter.com/brensudol"
+          >
+            Made by @brensudol
+          </a>
+          <a
+            className="black underline mr2"
+            href="https://github.com/brendansudol/neural-jokes"
+          >
+            Code on GitHub
+          </a>
+        </div>
       </div>
     )
   }
