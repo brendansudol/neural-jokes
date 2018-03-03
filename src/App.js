@@ -17,6 +17,7 @@ class App extends Component {
   state = {
     loading: false,
     results: [],
+    temp: '0.5',
     text: 'There was'
   }
 
@@ -62,34 +63,78 @@ class App extends Component {
   }
 
   render() {
-    const { loading, results, text } = this.state
+    const { loading, results, temp, text } = this.state
 
     return (
       <div className="p2 sm-p3 pb4 container">
         <div className="mb3">
           <div className="h3">🤖📝😂</div>
-          <h1 className="mt0 h2">AI Joke Generator</h1>
+          <h1 className="m0 h2">AI Joke Generator</h1>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat.
+          </p>
         </div>
 
-        <form className="mb2" onSubmit={this.handleSubmit}>
-          <div className="mb2">
-            <label className="block mb05 h6 bold caps">Initial text</label>
-            <textarea
-              name="text"
-              className="textarea m0"
-              rows="3"
-              value={text}
-              onChange={this.handleChange}
-            />
+        <div className="clearfix mxn2">
+          <div className="col col-12 sm-col-7 px2">
+            <form className="mb2" onSubmit={this.handleSubmit}>
+              <div className="mb3">
+                <label className="block mb05 h6 bold caps">Initial text</label>
+                <textarea
+                  name="text"
+                  className="textarea m0"
+                  rows="3"
+                  value={text}
+                  onChange={this.handleChange}
+                />
+              </div>
+              <div className="mb3">
+                <label className="block mb05 h6 bold caps">
+                  Variation: ({temp})
+                </label>
+                <input
+                  type="range"
+                  className="input-range block"
+                  name="temp"
+                  min="0"
+                  max="1"
+                  step="0.1"
+                  value={temp}
+                  onChange={this.handleChange}
+                />
+              </div>
+              <button
+                type="submit"
+                className="btn btn-primary"
+                disabled={loading}
+              >
+                {loading ? 'Generating jokes...' : 'Generate'}
+              </button>
+            </form>
           </div>
-          <button type="submit" className="btn btn-primary" disabled={loading}>
-            {loading ? 'Generating jokes...' : 'Generate'}
-          </button>
-        </form>
+          <div className="col col-12 sm-col-5 px2 xs-hide">
+            <div className="sm-pl3 border-left border-silver">
+              <h3 className="mt0 mb05 h6 bold caps">More details...</h3>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                enim ad minim veniam.
+              </p>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                enim ad minim veniam.
+              </p>
+            </div>
+          </div>
+        </div>
 
         {results.length > 0 && (
           <div className="my3 border-top border-silver">
-            <h3>Jokes:</h3>
+            <h3>Joke Ideas:</h3>
             {results.map((joke, i) => (
               <div key={i} className="mb2 p2 bg-silver rounded">
                 {joke}
