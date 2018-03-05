@@ -2,6 +2,9 @@
 
 import React, { Component } from 'react'
 
+import HelpIcon from './HelpIcon'
+import Tooltip from './Tooltip'
+
 const ml5 = window.ml5
 const modelPath = `${process.env.PUBLIC_URL}/static/models/conan`
 const lstm = new ml5.LSTMGenerator(modelPath)
@@ -92,9 +95,15 @@ class App extends Component {
                 />
               </div>
               <div className="mb3">
-                <label className="block mb05 h6 bold caps">
-                  Variation: ({temp})
+                <label className="inline-block mb05 h6 bold caps">
+                  <span className="mr1">
+                    Variation: (<span className="mono">{temp}</span>)
+                  </span>
+                  <Tooltip title="Stay tuned!">
+                    <HelpIcon className="align-bottom" />
+                  </Tooltip>
                 </label>
+
                 <input
                   type="range"
                   className="input-range block"

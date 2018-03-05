@@ -46,3 +46,7 @@ textarea {
 .border-top {
   border-top-style: dashed;
 }
+
+.mono {
+  font-family: 'Courier Next', courier, monospace;
+}
