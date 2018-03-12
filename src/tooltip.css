@@ -62,3 +62,7 @@
   border-right: 6px solid transparent;
   border-top: 6px solid white;
 }
+
+.tippy-tooltip.text-theme {
+  text-align: left;
+}

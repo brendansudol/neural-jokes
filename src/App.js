@@ -14,14 +14,21 @@ const genText = input =>
     lstm.generate(input, resolve)
   })
 
-const genTexts = inputs => Promise.all(inputs.map(inp => genText(inp)))
+const genTextMultiple = inputs => Promise.all(inputs.map(inp => genText(inp)))
+
+const tempText = `
+  Also known as “temperature”, decreasing the variation makes the model more
+  confident, but also more conservative in its text generation. Conversely, a
+  higher variation produces more diversity at the cost of more mistakes (e.g.
+  spelling errors).
+`
 
 class App extends Component {
   state = {
     loading: false,
     results: [],
     temp: '0.5',
-    text: 'There was'
+    text: "It's come out that"
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -40,6 +47,11 @@ class App extends Component {
     this.setState({ loading: true, results: [] }, this.initGen)
   }
 
+  usePrompt = text => e => {
+    e.preventDefault()
+    this.setState({ text, loading: true, results: [] }, this.initGen)
+  }
+
   initGen = () => setTimeout(this.runGen, 20)
 
   runGen = () => {
@@ -51,7 +63,7 @@ class App extends Component {
     }
 
     const inputs = [...Array(3)].map(() => ({ ...data }))
-    genTexts(inputs).then(this.processResults)
+    genTextMultiple(inputs).then(this.processResults)
   }
 
   processResults = data => {
@@ -71,18 +83,19 @@ class App extends Component {
     return (
       <div className="p2 sm-p3 pb4 container">
         <div className="mb3">
-          <div className="h3">🤖📝😂</div>
-          <h1 className="m0 h2">AI Joke Generator</h1>
+          <div className="h2">🤖📝😂</div>
+          <h1 className="my1 h1">AI Joke Generation Demo</h1>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat.
+            This experiment lets you generate jokes with a recurrent neural
+            network. This neural net was trained on thousands of Conan O’Brien
+            monologue <a href="http://teamcoco.com/jokes">jokes</a>. Once you
+            start writing a zinger, the model will come up with a few possible
+            ways to punch it up and finish the joke.
           </p>
         </div>
 
         <div className="clearfix mxn2">
-          <div className="col col-12 sm-col-7 px2">
+          <div className="col col-12 sm-col-6 px2">
             <form className="mb2" onSubmit={this.handleSubmit}>
               <div className="mb3">
                 <label className="block mb05 h6 bold caps">Initial text</label>
@@ -99,7 +112,7 @@ class App extends Component {
                   <span className="mr1">
                     Variation: (<span className="mono">{temp}</span>)
                   </span>
-                  <Tooltip title="Stay tuned!">
+                  <Tooltip theme="dark text" title={tempText}>
                     <HelpIcon className="align-bottom" />
                   </Tooltip>
                 </label>
@@ -120,22 +133,44 @@ class App extends Component {
                 className="btn btn-primary"
                 disabled={loading}
               >
-                {loading ? 'Generating jokes...' : 'Generate'}
+                {loading ? 'Generating jokes...' : 'Generate jokes'}
               </button>
             </form>
           </div>
-          <div className="col col-12 sm-col-5 px2 xs-hide">
+          <div className="col col-12 sm-col-6 px2 xs-hide">
             <div className="sm-pl3 border-left border-silver">
-              <h3 className="mt0 mb05 h6 bold caps">More details...</h3>
+              <h3 className="mt0 mb05 h6 bold caps">Details</h3>
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam.
+                The training{' '}
+                <a href="https://github.com/brendansudol/conan-jokes-data">
+                  data
+                </a>{' '}
+                is Conan jokes over the last ~7 years (9.8k jokes, 1.6M
+                characters). The model is a 2-layer LSTM with 512 hidden nodes
+                with a dropout of 0.5.
               </p>
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam.
+                Trained using TensorFlow. Modified to work in the browser via{' '}
+                <a href="https://deeplearnjs.org/">deeplearn.js</a> and{' '}
+                <a href="https://ml5js.github.io/">ML5.js</a>. Interface built
+                with React.
+              </p>
+              <p>
+                A few prompts to get you started:
+                <a
+                  className="block"
+                  href="#!"
+                  onClick={this.usePrompt('Donald Trump denies ')}
+                >
+                  Donald Trump denies...
+                </a>
+                <a
+                  className="block"
+                  href="#!"
+                  onClick={this.usePrompt('According to new research ')}
+                >
+                  According to new research...
+                </a>
               </p>
             </div>
           </div>
