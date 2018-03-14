@@ -55,10 +55,10 @@ class App extends Component {
   initGen = () => setTimeout(this.runGen, 20)
 
   runGen = () => {
-    const { text } = this.state
+    const { temp, text } = this.state
     const data = {
       seed: text,
-      temperature: 0.5,
+      temperature: +temp,
       length: 300
     }
 
@@ -103,6 +103,7 @@ class App extends Component {
                   name="text"
                   className="textarea m0"
                   rows="3"
+                  required={true}
                   value={text}
                   onChange={this.handleChange}
                 />
