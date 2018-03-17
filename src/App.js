@@ -28,7 +28,7 @@ class App extends Component {
     loading: false,
     results: [],
     temp: '0.5',
-    text: "It's come out that"
+    text: 'According to a recent poll, Donald Trump'
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -87,10 +87,9 @@ class App extends Component {
           <h1 className="my1 h1">AI Joke Generation Demo</h1>
           <p>
             This experiment lets you generate jokes with a recurrent neural
-            network. This neural net was trained on thousands of Conan O’Brien
-            monologue <a href="http://teamcoco.com/jokes">jokes</a>. Once you
-            start writing a zinger, the model will come up with a few possible
-            ways to punch it up and finish the joke.
+            network. It was trained on thousands of Conan O’Brien jokes. Once
+            you start writing a sentence, the model will come up with a few
+            possible ways to finish the zinger.
           </p>
         </div>
 
@@ -142,13 +141,12 @@ class App extends Component {
             <div className="sm-pl3 border-left border-silver">
               <h3 className="mt0 mb05 h6 bold caps">Details</h3>
               <p>
-                The training{' '}
+                The training data is 7+ years of Conan O’Brien monologue{' '}
                 <a href="https://github.com/brendansudol/conan-jokes-data">
-                  data
+                  jokes
                 </a>{' '}
-                is Conan jokes over the last ~7 years (9.8k jokes, 1.6M
-                characters). The model is a 2-layer LSTM with 512 hidden nodes
-                with a dropout of 0.5.
+                (9.8k total, 1.6M characters). The model is a 2-layer LSTM with
+                512 hidden nodes and a dropout of 0.5.
               </p>
               <p>
                 Trained using TensorFlow. Modified to work in the browser via{' '}
@@ -156,30 +154,13 @@ class App extends Component {
                 <a href="https://ml5js.github.io/">ML5.js</a>. Interface built
                 with React.
               </p>
-              <p>
-                A few prompts to get you started:
-                <a
-                  className="block"
-                  href="#!"
-                  onClick={this.usePrompt('Donald Trump denies ')}
-                >
-                  Donald Trump denies...
-                </a>
-                <a
-                  className="block"
-                  href="#!"
-                  onClick={this.usePrompt('According to new research ')}
-                >
-                  According to new research...
-                </a>
-              </p>
             </div>
           </div>
         </div>
 
         {results.length > 0 && (
-          <div className="my3 border-top border-silver">
-            <h3>Joke Ideas:</h3>
+          <div className="mt2 mb4 border-top border-silver">
+            <h3 className="h4">Joke Ideas:</h3>
             {results.map((joke, i) => (
               <div key={i} className="mb2 p2 bg-silver rounded">
                 {joke}
