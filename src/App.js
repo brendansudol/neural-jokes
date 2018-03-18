@@ -6,7 +6,7 @@ import HelpIcon from './HelpIcon'
 import Tooltip from './Tooltip'
 
 const ml5 = window.ml5
-const modelPath = `${process.env.PUBLIC_URL}/static/models/conan`
+const modelPath = `${process.env.PUBLIC_URL}/static/models/conan5`
 const lstm = new ml5.LSTMGenerator(modelPath)
 
 const genText = input =>
