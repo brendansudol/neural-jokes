@@ -1,11 +1,11 @@
 /* eslint-disable jsx-a11y/accessible-emoji */
 
-import ml5 from 'ml5'
 import React, { Component } from 'react'
 
 import HelpIcon from './HelpIcon'
 import Tooltip from './Tooltip'
 
+const ml5 = window.ml5
 const MODEL_PATH = `${process.env.PUBLIC_URL}/static/models/conan5`
 
 const nextFrame = () =>
