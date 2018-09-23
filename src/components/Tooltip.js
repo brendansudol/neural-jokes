@@ -4,7 +4,7 @@ import { createPortal } from 'react-dom'
 import tippy from 'tippy.js/dist/tippy.standalone.js'
 
 import 'tippy.js/dist/tippy.css'
-import './tooltip.css'
+import '../styles/tooltip.css'
 
 const applyIfFunction = fn => (typeof fn === 'function' ? fn() : fn)
 
@@ -66,7 +66,7 @@ class Tooltip extends Component {
       ...this.props,
       html: this.props.render ? this.contentRoot() : this.props.rawTemplate,
       dynamicTitle: true,
-      performance: true
+      performance: true,
     })
 
     this.tippy = this.tooltipDOM._tippy
@@ -108,7 +108,7 @@ Tooltip.defaultProps = {
   disabled: false,
   open: false,
   theme: 'light bordered',
-  title: null
+  title: null,
 }
 
 export default Tooltip

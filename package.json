@@ -5,6 +5,7 @@
   "private": true,
   "dependencies": {
     "ace-css": "^1.1.0",
+    "ml5": "^0.1.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-scripts": "1.1.1",
